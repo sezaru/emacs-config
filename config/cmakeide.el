@@ -22,19 +22,9 @@
 
 (setq cmake-ide-flags-c '("-I/usr/include"))
 
-(global-set-key (kbd "<f5>") 'cmake-ide-compile)
+(setq cmake-ide-flycheck-enabled nil)
 
-;; Hack to add irony-mode support in cmake-ide
-(defadvice cmake-ide-set-compiler-flags
-    (before cmake-ide-set-compiler-flags-before
-	    (buffer flags includes sys-includes) activate)
-  "Add support for irony-mode."
-  (when (buffer-live-p buffer)
-    (with-current-buffer buffer
-      (when (featurep 'irony)
-	(setq irony-cdb-search-directory-list '())
-	(add-to-list 'irony-cdb-search-directory-list (cmake-ide--get-dir))
-	(irony-cdb-autosetup-compile-options)))))
+(global-set-key (kbd "<f5>") 'cmake-ide-compile)
 
 (provide 'cmakeide.el)
 ;;; cmakeide.el ends here
